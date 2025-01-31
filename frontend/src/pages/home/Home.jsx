@@ -1,7 +1,12 @@
+import Banner from "./Banner"
+import Categories from "./Categories"
 
 function Home() {
   return (
-    <div>Home</div>
+    <>
+      <Banner/>
+      <Categories/>
+    </>
   )
 }
 
