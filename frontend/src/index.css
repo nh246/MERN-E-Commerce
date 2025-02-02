@@ -108,6 +108,10 @@ nav {
   color: var(--text-dark);
 }
 
+.active{
+  color: #ed3849 !important
+}
+
 .link a:hover {
   color: var(--primary-color);
 }
