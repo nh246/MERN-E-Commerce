@@ -29,11 +29,11 @@
   --header-font: "Playfair Display", serif;
 }
 
-* {
+/* * {
   padding: 0;
   margin: 0;
   box-sizing: border-box;
-}
+} */
 
 .section__container {
   max-width: var(--max-width-1400);
