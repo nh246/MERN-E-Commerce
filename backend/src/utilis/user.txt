@@ -10,3 +10,10 @@ Step-1: Create a user model
 
 step-2 : Create routes for the users
 
+get : to get info from database
+
+post : to add info to database
+
+put / patch : to update info in database
+
+delete : to delete info from database
