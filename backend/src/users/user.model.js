@@ -14,14 +14,21 @@ const userSchema = new Schema({
 
 // hash password
 
-userSchema.pre("save", async function (next) {
+userSchema.pre('save', async function (next) {
   const user = this;
-  if (!user.markModified("password")) return next();
+  if (!user.isModified('password')) return next();
 
   const hashedPassword = await bcrypt.hash(user.password, 10);
   user.password = hashedPassword;
   next();
 });
+
+
+// comparePassword
+
+userSchema.methods.comparePassword = function(candidatePassword) {
+  return bcrypt.compare(candidatePassword, this.password)
+}
 
 const User = model("User", userSchema);
 
