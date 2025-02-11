@@ -3,10 +3,14 @@ import { createRoot } from "react-dom/client";
 import "./index.css";
 import RouterPage from "./routes/RouterPage";
 import { BrowserRouter } from "react-router";
-import 'remixicon/fonts/remixicon.css'
+import "remixicon/fonts/remixicon.css";
+import { Provider } from "react-redux";
+import { store } from "./redux/store";
 
 createRoot(document.getElementById("root")).render(
-  <BrowserRouter>
-    <RouterPage />
-  </BrowserRouter>
+  <Provider store={store}>
+    <BrowserRouter>
+      <RouterPage />
+    </BrowserRouter>
+  </Provider>
 );
