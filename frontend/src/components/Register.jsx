@@ -1,16 +1,30 @@
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
 import { useForm } from "react-hook-form";
+import { useRegisterUserMutation } from "../redux/features/auth/authApi";
+import { useState } from "react";
 
 function Register() {
-  //   const [message, setMessage] = useState("");
+    const [message, setMessage] = useState("");
+
+    const navigate = useNavigate()
+
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
 
-  const onSubmit = (data) => {
-    console.log(data);
+
+  const [registerUser, {isLoading}] = useRegisterUserMutation()
+
+  const onSubmit = async (data) => {
+    try {
+      await registerUser(data).unwrap()
+      alert("registration succesfull")
+      navigate("/login")
+    } catch (error) {
+      setMessage("registration failed!")
+    }
   };
 
   return (
@@ -50,6 +64,10 @@ function Register() {
           {errors.password && (
             <span className="text-red-500 m-1 text-sm">Password is required</span>
           )}
+             
+             {
+            message && <p className="text-red-500" >Your given info is not valid</p>
+          }
 
           <button className="w-full mt-4 bg-primary hover:bg-primary-dark text-white font-medium py-3 rounded-sm">
             Register

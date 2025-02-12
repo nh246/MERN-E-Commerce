@@ -1,17 +1,32 @@
 // import { useState } from "react";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
 import { useForm } from "react-hook-form";
+import { useLoginUserMutation } from "../redux/features/auth/authApi";
+import { useState } from "react";
 
 function Login() {
-//   const [message, setMessage] = useState("");
+  const [message, setMessage] = useState("");
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
 
-  const onSubmit = (data) => {
-    console.log(data)
+  const [loginUser, {isLoading, error}] = useLoginUserMutation()
+  const navigate = useNavigate()
+
+  const onSubmit = async (data) => {
+    // console.log(data)
+    try {
+      const response = await loginUser(data).unwrap()
+
+      console.log(response)
+      alert("Login succesfull")
+      navigate("/")
+    } catch (error) {
+      setMessage("Please Provide a valid email and password")
+      // console.error("Login Failed:" , error)
+    }
   }
 
   return (
@@ -43,6 +58,10 @@ function Login() {
           {errors.password && (
             <span className="text-red-500 m-1">Password is required</span>
           )}
+
+          {
+            message && <p className="text-red-500" >{message}</p>
+          }
 
           <button className="w-full mt-4 bg-primary hover:bg-primary-dark text-white font-medium py-3 rounded-sm">
             Login
