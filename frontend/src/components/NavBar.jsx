@@ -1,6 +1,56 @@
-import { Link, NavLink } from "react-router";
-
+import { Link, NavLink, useNavigate } from "react-router";
+import { useDispatch, useSelector } from "react-redux";
+import avatarImg from "../assets/avatar.png";
+import { useState } from "react";
+import { logout } from "../redux/features/auth/authSlice";
+import { useLogoutUserMutation } from "../redux/features/auth/authApi";
 function NavBar() {
+  const { user } = useSelector((state) => state.auth);
+  // console.log(user);
+  const dispatch = useDispatch();
+
+  const [loginUser] = useLogoutUserMutation();
+
+  const navigate = useNavigate();
+
+  // drop down navigation
+
+  const [isDropDownOpen, setIsDropDownOpen] = useState(false);
+
+  const handleDropDownToggle = () => {
+    setIsDropDownOpen(!isDropDownOpen);
+  };
+
+  const userDropdownMenus = [
+    { lable: "Dashboard", path: "/dashboard" },
+    { lable: "Profile", path: "/dashboard/profile" },
+    { lable: "Payments", path: "dashboeard/payments" },
+    { lable: "Orders", path: "dashboeard/orders" },
+  ];
+
+  const adminDropdownMenus = [
+    { lable: "Dashboard", path: "/dashboard/admin" },
+    { lable: "Manage Items", path: "/dashboard/manage-products" },
+    { lable: "All Orders", path: "/dashboard/manage-orders" },
+    { lable: "All Product", path: "/dashboard/add-product" },
+  ];
+
+  // role base dropdown show
+
+  const dropDownMenues =
+    user?.role === "admin" ? [...adminDropdownMenus] : [...userDropdownMenus];
+
+  const handleLogout = async () => {
+    try {
+      await loginUser().unwrap();
+      dispatch(logout());
+      alert("Logout sucessfull");
+      navigate("/");
+    } catch (error) {
+      console.error("Error logging out", error);
+    }
+  };
+
   return (
     <header className="fixed-nav-bar w-nav">
       <nav className="max-w-screen-2xl mx-auto px-4 flex justify-between items-center">
@@ -58,9 +108,41 @@ function NavBar() {
             </button>
           </span>
           <span>
-            <Link to="/login">
-              <i className="ri-user-line rounded-full cursor-pointer"></i>
-            </Link>
+            {user ? (
+              <>
+                <img
+                  onClick={handleDropDownToggle}
+                  src={user?.profileImage || avatarImg}
+                  className="size-6 rounded-full cursor-pointer"
+                />
+                {isDropDownOpen && (
+                  <div className="absolute right-0 mt-3 p-4 w-48 bg-white border-gray-200 border rounded-lg shadow-lg z-50">
+                    <ul className="font-medium space-y-4 p-2">
+                      {dropDownMenues.map((menu, index) => (
+                        <li key={index}>
+                          <Link
+                            className="dropdown-items"
+                            onClick={() => handleDropDownToggle(false)}
+                            to={menu.path}
+                          >
+                            {menu.lable}
+                          </Link>
+                        </li>
+                      ))}
+                      <li>
+                        <Link className="dropdown-items" to={handleLogout}>
+                          Logout
+                        </Link>
+                      </li>
+                    </ul>
+                  </div>
+                )}
+              </>
+            ) : (
+              <Link to="/login">
+                <i className="ri-user-line rounded-full cursor-pointer"></i>
+              </Link>
+            )}
           </span>
         </div>
       </nav>

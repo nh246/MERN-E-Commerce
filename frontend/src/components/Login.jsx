@@ -3,6 +3,8 @@ import { Link, useNavigate } from "react-router";
 import { useForm } from "react-hook-form";
 import { useLoginUserMutation } from "../redux/features/auth/authApi";
 import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { setUser } from "../redux/features/auth/authSlice";
 
 function Login() {
   const [message, setMessage] = useState("");
@@ -14,14 +16,16 @@ function Login() {
 
   const [loginUser, {isLoading, error}] = useLoginUserMutation()
   const navigate = useNavigate()
-
+  const dispatch = useDispatch()
   const onSubmit = async (data) => {
     // console.log(data)
     try {
       const response = await loginUser(data).unwrap()
-
-      console.log(response)
+      
+      const {token, user} = response
+      // console.log(response.token)
       alert("Login succesfull")
+       dispatch(setUser({user}))
       navigate("/")
     } catch (error) {
       setMessage("Please Provide a valid email and password")

@@ -56,4 +56,18 @@ const userLoggedIn = async (req, res) => {
   }
 };
 
-module.exports = { userRegistration, userLoggedIn };
+// user Logout 
+
+const userLogout = async (req, res)=> {
+ try {
+  res.clearCookie("token");
+  res.status(200).send({message: "Logged out successfully"})
+  
+ } catch (error) {
+  console.error("Error logged out a user:", error);
+  res.status(500).send({ message: "Logged out failed" });
+ }
+}
+
+
+module.exports = { userRegistration, userLoggedIn, userLogout };
