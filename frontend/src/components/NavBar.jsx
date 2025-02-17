@@ -130,7 +130,7 @@ function NavBar() {
                         </li>
                       ))}
                       <li>
-                        <Link className="dropdown-items" to={handleLogout}>
+                        <Link className="dropdown-items" onClick={handleLogout}>
                           Logout
                         </Link>
                       </li>

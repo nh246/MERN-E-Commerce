@@ -1,5 +1,6 @@
 const express = require("express");
-const { userRegistration, userLoggedIn, userLogout } = require("./user.controller");
+const { userRegistration, userLoggedIn, userLogout, getAllUsers } = require("./user.controller");
+const varifyToken = require("../middleware/varifyToken");
 
 const router = express.Router();
 
@@ -12,6 +13,14 @@ router.post("/register", userRegistration);
 
 router.post('/login', userLoggedIn)
 
+// Logout routes
+
 router.post('/logout', userLogout)
+
+// get all users endpoints (token varify and admin)
+
+router.get('/users', varifyToken, getAllUsers)
+
+
 
 module.exports = router;

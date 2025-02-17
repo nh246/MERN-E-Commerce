@@ -1,4 +1,5 @@
 const { generateToken } = require("../middleware/generateToken");
+const { successResponse, errorResponse } = require("../utilis/responseHandler");
 const User = require("./user.model");
 
 // UserRegistration
@@ -29,45 +30,61 @@ const userLoggedIn = async (req, res) => {
       return res.status(404).send({ message: "User not found" });
     }
 
-    const isMatch = await user.comparePassword(password)
-   if(!isMatch){
-    return res.status(401).send({ message: "invalid password" });}
+    const isMatch = await user.comparePassword(password);
+    if (!isMatch) {
+      return res.status(401).send({ message: "invalid password" });
+    }
     const token = await generateToken(user._id);
-    res.cookie('token', token, { httpOnly: true , secure: true, sameSite: "None" });
+    res.cookie("token", token, {
+      httpOnly: true,
+      secure: true,
+      sameSite: "None",
+    });
     res.status(200).send({
-         message: "Login successful",
-         token,
-         user: {
-           _id: user._id,
-           username: user.username,
-           email: user.email,
-           role: user.role,
-           profileImage: user.profileImage,
-           bio: user.bio,
-           profession: user.profession
-         },
-        });
-
-
-
+      message: "Login successful",
+      token,
+      user: {
+        _id: user._id,
+        username: user.username,
+        email: user.email,
+        role: user.role,
+        profileImage: user.profileImage,
+        bio: user.bio,
+        profession: user.profession,
+      },
+    });
   } catch (error) {
     console.error("Error logging in a user:", error);
     res.status(500).send({ message: "Login failed" });
   }
 };
 
-// user Logout 
+// user Logout
 
-const userLogout = async (req, res)=> {
- try {
-  res.clearCookie("token");
-  res.status(200).send({message: "Logged out successfully"})
-  
- } catch (error) {
-  console.error("Error logged out a user:", error);
-  res.status(500).send({ message: "Logged out failed" });
- }
-}
+const userLogout = async (req, res) => {
+  try {
+    res.clearCookie("token");
+    // res.status(200).send({ message: "Logged out successfully" });
 
+    successResponse(res, 200, "Logged out successfully");
+  } catch (error) {
+    // console.error("Error logged out a user:", error);
+    // res.status(500).send({ message: "Logged out failed" });
+    errorResponse(res, 500, "Logged out failed", error);
+  }
+};
 
-module.exports = { userRegistration, userLoggedIn, userLogout };
+// get all users
+
+const getAllUsers = async (req, res) => {
+
+  try {
+    const users = await User.find({}, 'email role ').sort({createdAt: -1})
+    successResponse(res, 200, "All users fetched successfully", data= users);
+  } catch (error) {
+    errorResponse(res, 500, "Failed to fetch all users", error);
+  }
+
+};
+
+module.exports = { userRegistration, userLoggedIn, userLogout, getAllUsers };
