@@ -1,6 +1,7 @@
 const express = require("express");
 const { userRegistration, userLoggedIn, userLogout, getAllUsers } = require("./user.controller");
 const varifyToken = require("../middleware/varifyToken");
+const varifyAdmin = require("../middleware/varifyAdmin");
 
 const router = express.Router();
 
@@ -19,7 +20,7 @@ router.post('/logout', userLogout)
 
 // get all users endpoints (token varify and admin)
 
-router.get('/users', varifyToken, getAllUsers)
+router.get('/users', varifyToken, varifyAdmin, getAllUsers)
 
 
 
