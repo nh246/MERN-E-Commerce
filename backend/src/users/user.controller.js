@@ -1,4 +1,5 @@
 const { generateToken } = require("../middleware/generateToken");
+
 const { successResponse, errorResponse } = require("../utilis/responseHandler");
 const User = require("./user.model");
 
@@ -77,14 +78,70 @@ const userLogout = async (req, res) => {
 // get all users
 
 const getAllUsers = async (req, res) => {
-
   try {
-    const users = await User.find({}, 'email role ').sort({createdAt: -1})
-    successResponse(res, 200, "All users fetched successfully", data= users);
+    const users = await User.find({}, "email role ").sort({ createdAt: -1 });
+    successResponse(res, 200, "All users fetched successfully", (data = users));
   } catch (error) {
     errorResponse(res, 500, "Failed to fetch all users", error);
   }
-
 };
 
-module.exports = { userRegistration, userLoggedIn, userLogout, getAllUsers };
+// delete User
+
+const deleteUser = async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    const user = await User.findByIdAndDelete(id);
+    if (!user) {
+      return errorResponse(res, 404, "User not found");
+    }
+    return successResponse(res, 200, "User deleted successfully");
+  } catch (error) {
+    errorResponse(res, 500, "Failed to delete user", error);
+  }
+};
+
+// update user role
+
+const updateUserRole = async (req, res) => {
+  const { id } = req.params;
+  const { role } = req.body;
+  try {
+    const updatedUser = await User.findByIdAndUpdate(
+      id,
+      { role },
+      { new: true }
+    );
+    if (!updatedUser) {
+      return errorResponse(res, 404, "User not found");
+    }
+
+    return successResponse(res, 200, " User role updated successfully" , data = updatedUser);
+  } catch (error) {
+    errorResponse(res, 500, "Failed to update user role", error);
+  }
+};
+
+// edit User Profile
+
+const editUserProfile = async (req,res)=> {
+    const { id } = req.params;
+  try {
+    
+  } catch (error) {
+    errorResponse(res, 500, "Failed to Update user profile", error);
+  }
+}
+ 
+
+
+module.exports = {
+  userRegistration,
+  userLoggedIn,
+  userLogout,
+  getAllUsers,
+  deleteUser,
+  updateUserRole,
+  editUserProfile
+};

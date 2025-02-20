@@ -1,5 +1,5 @@
 const express = require("express");
-const { userRegistration, userLoggedIn, userLogout, getAllUsers } = require("./user.controller");
+const { userRegistration, userLoggedIn, userLogout, getAllUsers, deleteUser, updateUserRole, editUserProfile } = require("./user.controller");
 const varifyToken = require("../middleware/varifyToken");
 const varifyAdmin = require("../middleware/varifyAdmin");
 
@@ -22,6 +22,16 @@ router.post('/logout', userLogout)
 
 router.get('/users', varifyToken, varifyAdmin, getAllUsers)
 
+// delete user emdpoints (only admin)
 
+router.delete('/users/:id', varifyToken, varifyAdmin, deleteUser)
+
+// update user role by admin
+
+router.put('/users/:id', varifyToken, varifyAdmin, updateUserRole)
+
+// edit user profile 
+
+router.patch('/edit-profile/:id', editUserProfile)
 
 module.exports = router;
