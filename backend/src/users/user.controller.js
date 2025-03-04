@@ -117,7 +117,12 @@ const updateUserRole = async (req, res) => {
       return errorResponse(res, 404, "User not found");
     }
 
-    return successResponse(res, 200, " User role updated successfully" , data = updatedUser);
+    return successResponse(
+      res,
+      200,
+      " User role updated successfully",
+      (data = updatedUser)
+    );
   } catch (error) {
     errorResponse(res, 500, "Failed to update user role", error);
   }
@@ -125,16 +130,27 @@ const updateUserRole = async (req, res) => {
 
 // edit User Profile
 
-const editUserProfile = async (req,res)=> {
-    const { id } = req.params;
+const editUserProfile = async (req, res) => {
+  const { id } = req.params;
+  const { username, profileImage, bio, profession } = req.body;
   try {
-    
+    const updateFields = {
+      username,
+      profileImage,
+      bio,
+      profession,
+    };
+    const updatedUser = await User.findByIdAndUpdate(id, updateFields, {
+      new: true,
+    });
+    if (!updatedUser) {
+      return errorResponse(res, 404, "User not found")
+    }
+    return successResponse(res, 200, "User profile updated successfully", updatedUser)
   } catch (error) {
     errorResponse(res, 500, "Failed to Update user profile", error);
   }
-}
- 
-
+};
 
 module.exports = {
   userRegistration,
@@ -143,5 +159,5 @@ module.exports = {
   getAllUsers,
   deleteUser,
   updateUserRole,
-  editUserProfile
+  editUserProfile,
 };

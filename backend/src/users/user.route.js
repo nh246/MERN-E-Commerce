@@ -32,6 +32,6 @@ router.put('/users/:id', varifyToken, varifyAdmin, updateUserRole)
 
 // edit user profile 
 
-router.patch('/edit-profile/:id', editUserProfile)
+router.patch('/edit-profile/:id' ,varifyToken , editUserProfile)
 
 module.exports = router;
