@@ -17,8 +17,11 @@ require("dotenv").config();
 // routes
 
 const userRoutes = require("./src/users/user.route");
+const productsRoutes = require('./src/products/product.route')
+
 
 app.use("/api/auth", userRoutes);
+app.use('/api/products', productsRoutes)
 
 async function main() {
   await mongoose.connect(process.env.UB_URL);
