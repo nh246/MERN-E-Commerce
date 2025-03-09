@@ -1,14 +1,14 @@
 const express = require('express')
 
-const  verifyToken  = require('../middleware/varifyToken')
-const verifyAdmin = require('../middleware/varifyAdmin')
+// const  verifyToken  = require('../middleware/varifyToken')
+// const verifyAdmin = require('../middleware/varifyAdmin')
 
 const { createNewProduct, getAllProducts } = require('./product.controller')
 const router = express.Router()
 
 // Create a product ( only admin)
 
-router.post("/create-product",verifyToken, verifyAdmin,  createNewProduct)
+router.post("/create-product", createNewProduct)
 
 // get all products
 

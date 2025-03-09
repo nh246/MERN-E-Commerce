@@ -1,5 +1,4 @@
 const Reviews = require("../reviews/review.model");
-import { fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 const { errorResponse, successResponse } = require("../utilis/responseHandler");
 const Products = require("./product.model");
 
@@ -58,8 +57,22 @@ try {
     }
   }
 
+  const skip = (parseInt(page)-1) * parseInt(limit)
+  const totalProducts = await Products.countDocuments(filter)
+  const totalPages = Math.ceil(totalProducts / parseInt(limit))
+
+
   const products = await Products.find()
-  return successResponse(res, 200, "All products fetched successfully", products)
+    .skip(skip)
+    .limit(parseInt(limit))
+    .populate("author", 'email username')
+
+
+
+  return successResponse(res, 200, "All products fetched successfully", data={
+    products,
+    totalProducts,
+    totalPages})
 } catch (error) {
   return errorResponse(res, 500, " Failed to get all products", error)
 }
