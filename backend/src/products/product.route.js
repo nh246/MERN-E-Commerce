@@ -14,5 +14,9 @@ router.post("/create-product", createNewProduct)
 
 router.get("/", getAllProducts)
 
+// get single products
+
+
+
 
 module.exports = router
