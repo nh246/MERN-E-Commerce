@@ -47,4 +47,44 @@ const postAReview = async (req, res) => {
   }
 };
 
-module.exports = { postAReview };
+// getUsersReview
+
+const getUsersReview = async (req,res)=> {
+
+  const {userId} = req.params
+
+  try {
+    
+    if(!userId){
+      return errorResponse(res,400, "Missing user Id")
+    }
+
+    const reviews = await Reviews.find({userId: userId})
+
+    if(reviews.length === 0){
+      return errorResponse(res,404, "No review found")
+    }
+    
+    return successResponse(res, 200 , "Review fetched successfully", reviews)
+
+  } catch (error) {
+    return errorResponse(res, 500, "Failed to get users review", error);
+  }
+}
+
+// getTotalReviewsCount
+
+const getTotalReviewsCount = async (req,res)=> {
+
+  try {
+    
+    const totalReviews = await Reviews.countDocuments({})
+
+    return successResponse(res,200, "Total reviews count fetched successfully", totalReviews)
+
+  } catch (error) {
+    return errorResponse(res, 500, "Failed to get total reviews count", error);
+  }
+}
+
+module.exports = { postAReview ,getUsersReview ,getTotalReviewsCount};
