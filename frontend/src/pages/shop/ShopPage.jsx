@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useFetchAllProductsQuery } from "../../redux/features/products/productsApi";
 import ProductsCart from "./ProductsCart";
 import ShopFiltering from "./ShopFiltering";
+import Loading from "../../components/Loading";
 
 const filters = {
   categories: ["all", "accessories", "dress", "jewellery", "cosmetics"],
@@ -39,7 +40,8 @@ function ShopPage() {
     limit: productsPerPage,
   });
 
-  if (isLoading) return <p>Loadign...</p>;
+  if (isLoading) return <Loading/>
+
   const { products, totalPages, totalProducts } = productsData?.data || {};
 
   // handle page change
