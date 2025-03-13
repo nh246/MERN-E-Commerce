@@ -5,8 +5,7 @@ function ProductsCart({ products }) {
 
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
-      {products &&
-        products.map((product, index) => (
+      {products.length > 0 ?( products.map((product, index) => (
           <div key={index} className="product__card">
             <div className="relative">
               <a href="/shop/66d45fb27e580755d843823e">
@@ -31,7 +30,8 @@ function ProductsCart({ products }) {
               <RatingStar rating={product?.rating} />
             </div>
           </div>
-        ))}
+        )) ) : <div>No products found</div>
+        }
     </div>
   );
 }

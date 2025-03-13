@@ -7,7 +7,7 @@ const productsApi = createApi({
     baseUrl: `${getBaseUrl()}/api/products`,
     credentials: "include",
   }),
-  tagTypes: ["Products",], 
+  tagTypes: ["Products"], 
   endpoints: (builder) => ({
     // get all products
     fetchAllProducts: builder.query({

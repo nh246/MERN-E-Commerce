@@ -50,7 +50,7 @@ try {
   }
 
   if(minPrice && maxPrice){
-    const min = perseFloat(minPrice)
+    const min = parseFloat(minPrice)
     const max = parseFloat(maxPrice)
     if(!isNaN(min)&& !isNaN(max)){
       filter.price = {$gte:min, $lte:max}
@@ -62,7 +62,7 @@ try {
   const totalPages = Math.ceil(totalProducts / parseInt(limit))
 
 
-  const products = await Products.find()
+  const products = await Products.find(filter)
     .skip(skip)
     .limit(parseInt(limit))
     .populate("author", 'email username')

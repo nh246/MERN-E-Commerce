@@ -1,7 +1,7 @@
 
 function RatingStar({rating}) {
 
-    console.log(rating)
+    // console.log(rating)
     const stars = [];
 
     for(let i =1; i<=5; i++){
