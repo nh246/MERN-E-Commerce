@@ -27,7 +27,7 @@ const reviewsApi = createApi({
         // get reviews count
         getReviewsCount: builder.query({
             query: ()=> ({
-                query: "/total-reviews",
+                url: "/total-reviews",
             })
         }),
 

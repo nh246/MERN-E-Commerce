@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useSelector } from "react-redux";
-import { useParams } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import { useFetchProductByIdQuery } from "../../../redux/features/products/productsApi";
 import { usePostAReviewMutation } from "../../../redux/features/reviews/reviewsApi";
 
@@ -9,6 +9,7 @@ function PostAReview({ isModalOpen, handleClose }) {
   const { user } = useSelector((state) => state.auth);
   const [rating, setRating] = useState(0);
   const [comment, setComment] = useState("");
+  const navigate = useNavigate();
 
   const { refetch } = useFetchProductByIdQuery(id, { skip: !id });
   const handleRating = (value) => {
@@ -19,6 +20,12 @@ function PostAReview({ isModalOpen, handleClose }) {
   // console.log(postAReview)
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    if (!user || !user._id) {
+      alert("You must be logged in to post a review");
+      navigate("/login");
+      return;
+    }
     // console.log(`Rating: ${rating} comment: ${comment}`)
     const newReview = {
       comment: comment,
@@ -34,7 +41,8 @@ function PostAReview({ isModalOpen, handleClose }) {
       setRating(0);
       refetch();
     } catch (error) {
-      alert("Failed to post a review");
+      console.error("Error posting review:", error);
+      alert("Failed to post a review. Please try again.");
     }
 
     handleClose();

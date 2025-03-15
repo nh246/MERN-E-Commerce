@@ -1,9 +1,10 @@
 const express = require('express')
 const { postAReview, getUsersReview, getTotalReviewsCount } = require('./review.controller')
+const varifyToken = require('../middleware/varifyToken')
 const router = express.Router()
 
 // post a review  
-router.post("/post-review", postAReview)
+router.post("/post-review", varifyToken , postAReview)
 
 // review counts
 router.get("/total-reviews", getTotalReviewsCount)
