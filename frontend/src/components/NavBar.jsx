@@ -4,7 +4,12 @@ import avatarImg from "../assets/avatar.png";
 import { useState } from "react";
 import { logout } from "../redux/features/auth/authSlice";
 import { useLogoutUserMutation } from "../redux/features/auth/authApi";
+import CartModal from "../pages/shop/CartModal";
 function NavBar() {
+
+  const products = useSelector((state)=> state.cart.products)
+  const [isCartOpen, setIsCartOpen] = useState(false)
+
   const { user } = useSelector((state) => state.auth);
   // console.log(user);
   const dispatch = useDispatch();
@@ -20,6 +25,10 @@ function NavBar() {
   const handleDropDownToggle = () => {
     setIsDropDownOpen(!isDropDownOpen);
   };
+
+  const handleCartToggle = () => {
+    setIsCartOpen(!isCartOpen);
+  }
 
   const userDropdownMenus = [
     { lable: "Dashboard", path: "/dashboard" },
@@ -100,10 +109,12 @@ function NavBar() {
             </Link>
           </span>
           <span>
-            <button className="hover:text-primary">
+            <button 
+            onClick={handleCartToggle}
+            className="hover:text-primary">
               <i className="ri-shopping-bag-line"></i>
               <sup className="text-sm inline-block px-1.5 text-white rounded-full bg-primary text-center">
-                0
+                {products.length}
               </sup>
             </button>
           </span>
@@ -146,6 +157,11 @@ function NavBar() {
           </span>
         </div>
       </nav>
+
+      {/* cart model  */}
+      {
+        isCartOpen && <CartModal products={products} isOpen={isCartOpen} onClose={handleCartToggle} />
+      }
     </header>
   );
 }

@@ -1,7 +1,15 @@
 import { Link } from "react-router";
 import RatingStar from "../../components/RatingStar";
+import { useDispatch } from "react-redux";
+import { addToCart } from "../../redux/features/cart/cartSlice";
 
 function ProductsCart({ products }) {
+
+  const dispatch = useDispatch()
+
+  const handleAddToCart = (product)=> {
+    dispatch(addToCart(product))
+  }
   // console.log(products);
 
   return (
@@ -17,7 +25,9 @@ function ProductsCart({ products }) {
                 />
               </Link>
               <div className="hover:block absolute top-3 right-3">
-                <button>
+                <button 
+                onClick={()=> handleAddToCart(product)}
+                >
                   <i className="ri-shopping-cart-2-line bg-primary p-1.5 text-white hover:bg-primary-dark"></i>
                 </button>
               </div>
