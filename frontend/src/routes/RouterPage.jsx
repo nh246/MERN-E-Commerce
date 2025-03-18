@@ -7,6 +7,7 @@ import ErrorPage from "../components/ErrorPage";
 import Login from "../components/Login";
 import Register from "../components/Register";
 import SingleProduct from "../pages/shop/productDetails/SingleProduct";
+import PaymentSuccess from "../components/PaymentSuccess";
 function RouterPage() {
   return (
     <Routes>
@@ -15,6 +16,7 @@ function RouterPage() {
         <Route path="/shop" element={<ShopPage />} />
         <Route path="/shop/:id" element={<SingleProduct />} />
         <Route path="/categories/:categoryName" element={<CategoryPage />} />
+        <Route path="/success" element={<PaymentSuccess />} />
       </Route>
       <Route path="*" element={<ErrorPage />} />
       <Route path="/login" element={<Login/>}/>
