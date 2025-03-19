@@ -1,6 +1,7 @@
 const { response } = require("express");
 const { BASE_URL } = require("../utilis/baseURL");
-const { errorResponse } = require("../utilis/responseHandler");
+const { errorResponse, successResponse } = require("../utilis/responseHandler");
+const Order = require("./order.model");
 const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 
 // create checkout session controller
@@ -33,4 +34,47 @@ const makePaymentRequest = async (req, res) => {
   }
 };
 
-module.exports = { makePaymentRequest };
+// confirmPayment
+
+const confirmPayment = async (req,res) => {
+
+  const {session_id} = req.body
+  console.log(req.body)
+
+  try {
+    const session = await stripe.checkout.sessions.retrieve(session_id, {
+      expand: ["line_items", "payment_intent"]
+    }) 
+    const paymentIntentId = session.payment_intent.id
+    let order = await Order.findOne({orderId: paymentIntentId})
+
+    if(!order){
+      const lineItems = session.line_items.data.map((item) => ({
+        productId: item.price.product,
+        quantity: item.quantity
+      }))
+
+      const amount = session.amount_total / 100
+
+      order= new Order({
+        orderId: paymentIntentId,
+        products: lineItems,
+        amount: amount,
+        email: session.customer_details.email,
+        status: session.payment_intent.status === "succeeded" ? "pending" : "pending"
+      })
+      
+    }
+    else{
+      order.status = session.payment_intent.status === "succeeded" ? "pending" : "pending"
+    }
+
+    await order.save()
+  //  console.log(order.status)
+    return successResponse(res, 200, "Payment confirmed successfully", order)
+  } catch (error) {
+    return errorResponse(res , 500, "Failed to confirm payment", error)
+  }
+}
+
+module.exports = { makePaymentRequest ,confirmPayment };

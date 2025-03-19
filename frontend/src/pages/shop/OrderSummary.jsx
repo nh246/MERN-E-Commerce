@@ -20,7 +20,7 @@ function OrderSummary() {
 
   // handle Make Payment
 
-  const makePayment = async (e) => {
+  const makePayment = async () => {
     const stripe = await loadStripe(import.meta.env.VITE_STRIPE_PK);
     console.log(stripe);
 
