@@ -24,12 +24,13 @@ const userRoutes = require("./src/users/user.route");
 const productsRoutes = require('./src/products/product.route')
 const reviewsRoutes = require('./src/reviews/review.route')
 const ordersRoutes = require("./src/orders/order.route")
-
+const statsRoutes = require('./src/stats/stats.route')
 
 app.use("/api/auth", userRoutes);
 app.use('/api/products', productsRoutes)
 app.use('/api/reviews', reviewsRoutes)
 app.use('/api/orders', ordersRoutes)
+app.use('/api/stats', statsRoutes)
 
 async function main() {
   await mongoose.connect(process.env.UB_URL);
