@@ -24,7 +24,7 @@ function TimeLineStep({step, order, isCompleted, isCurrent, isLastStep , icon , 
                 )}
             </div>
             <div className="mt-3 sm:pe-8">
-                <h3 className={`!font-semibold !text-lg ${labelTextColor} dark:text-black`}>
+                <h3 className={`!font-semibold !text-lg ${labelTextColor} dark:text-whitw`}>
                     {  
                     step.label
 

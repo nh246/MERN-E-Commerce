@@ -22,7 +22,7 @@ function OrderSummary() {
 
   const makePayment = async () => {
     const stripe = await loadStripe(import.meta.env.VITE_STRIPE_PK);
-    console.log(stripe);
+    // console.log(stripe);
 
     const body = {
       products: products,
