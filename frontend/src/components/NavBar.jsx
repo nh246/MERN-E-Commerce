@@ -33,8 +33,9 @@ function NavBar() {
   const userDropdownMenus = [
     { lable: "Dashboard", path: "/dashboard" },
     { lable: "Profile", path: "/dashboard/profile" },
-    { lable: "Payments", path: "dashboeard/payments" },
-    { lable: "Orders", path: "dashboeard/orders" },
+    { lable: "Payments", path: "/dashboard/payments" },
+    { lable: "Orders", path: "/dashboard/orders" },
+    { lable: "Reviews", path: "/dashboard/reviews" },
   ];
 
   const adminDropdownMenus = [
