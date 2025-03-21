@@ -2,8 +2,8 @@
 function TimeLineStep({step, order, isCompleted, isCurrent, isLastStep , icon , description}) {
 
 
-  const iconBgColor = isCompleted || isCurrent ? `bg-${icon.bgColor}` : 'bg-gray-100';
-    const iconTextColor = isCompleted || isCurrent ? 'text-white' : `text-${icon.textColor}`;
+  const iconBgColor = isCompleted || isCurrent ? "bg-red-500" : "";
+    const iconTextColor = isCompleted || isCurrent ? 'text-white' : "bg-gray-200";
     const connectorColor = isCompleted ? 'bg-blue-500' : 'bg-gray-200';
     const labelTextColor = isCompleted || isCurrent ? 'text-gray-900' : 'text-gray-500';
     const descriptionTextColor = isCompleted || isCurrent ? 'text-gray-900' : 'text-gray-500';
@@ -13,7 +13,7 @@ function TimeLineStep({step, order, isCompleted, isCurrent, isLastStep , icon , 
     <li className="relative mb-6 sm:mb-0 sm:pl-10">
             <div className="flex items-center">
                 <div
-                    className={`z-10 flex items-center justify-center w-6 h-6 ${iconBgColor} ${iconTextColor} rounded-full ring-0 ring-white dark:ring-gray-900 shrink-0`}
+                    className={`z-10 flex items-center justify-center w-6 h-6 rounded-full ring-0 ${iconTextColor} ${iconBgColor} ring-white dark:ring-gray-900 shrink-0`}
                 >
                     <i className={`ri-${icon.iconName} text-xl`}></i>
                 </div>

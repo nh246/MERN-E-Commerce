@@ -11,6 +11,8 @@ import PaymentSuccess from "../components/PaymentSuccess";
 import DashboardLayout from "../pages/dashboard/DashboardLayout";
 import PrivateRoute from "./PrivateRoute";
 import UserDMain from "../pages/dashboard/user/dashboard/UserDMain";
+import UserOrders from "../pages/dashboard/user/orders/UserOrders";
+import OrderDetail from "../pages/dashboard/user/orders/OrderDetail";
 function RouterPage() {
   return (
     <Routes>
@@ -20,6 +22,7 @@ function RouterPage() {
         <Route path="/shop/:id" element={<SingleProduct />} />
         <Route path="/categories/:categoryName" element={<CategoryPage />} />
         <Route path="/success" element={<PaymentSuccess />} />
+        <Route path="/orders/:orderId" element={<OrderDetail/>} />
       </Route>
       <Route path="*" element={<ErrorPage />} />
       <Route path="/login" element={<Login />} />
@@ -27,7 +30,7 @@ function RouterPage() {
       <Route path="/dashboard" element={<PrivateRoute><DashboardLayout/></PrivateRoute>}>
         <Route index element={<UserDMain/>} />
         <Route path="profile" element={<h1>Profile</h1>} />
-        <Route path="orders" element={<h1>Orders</h1>} />
+        <Route path="orders" element={<UserOrders/>} />
         <Route path="payments" element={<h1>Payments</h1>}/>
         <Route path="reviews" element={<h1>reviews</h1>}/>
         <Route path="admin" element={ <PrivateRoute role={"admin"} ><h1>admin dashboard</h1></PrivateRoute> }/>
