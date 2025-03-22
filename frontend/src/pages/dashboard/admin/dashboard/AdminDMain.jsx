@@ -13,7 +13,7 @@ function AdminDMain() {
 
 
   const stats = adminData || {}
-  console.log(stats)
+//   console.log(stats)
   if(!stats) return <div>Failed to fetch Admin Stats data</div>
 
   return (
