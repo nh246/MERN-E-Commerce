@@ -35,7 +35,7 @@ function UserDMain() {
   if (isLoading) return <Loading />;
   if (error) return <div>Failed to fetch data</div>;
 
-  const stats = UserData?.data;
+  const stats = UserData?.data || {}
   const { totalPayments, totalPurchasedProducts, totalReviews } = stats || {};
   // console.log(totalPayments , totalPurchasedProducts , totalReviews)
 

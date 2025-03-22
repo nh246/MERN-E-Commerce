@@ -16,6 +16,7 @@ import OrderDetail from "../pages/dashboard/user/orders/OrderDetail";
 import UserPayments from "../pages/dashboard/user/payments/UserPayments";
 import UserReviews from "../pages/dashboard/user/reviews/UserReviews";
 import UserProfile from "../pages/dashboard/user/profile/UserProfile";
+import AdminDMain from './../pages/dashboard/admin/dashboard/AdminDMain';
 function RouterPage() {
   return (
     <Routes>
@@ -36,7 +37,7 @@ function RouterPage() {
         <Route path="orders" element={<UserOrders/>} />
         <Route path="payments" element={<UserPayments/>}/>
         <Route path="reviews" element={<UserReviews/>}/>
-        <Route path="admin" element={ <PrivateRoute role={"admin"} ><h1>admin dashboard</h1></PrivateRoute> }/>
+        <Route path="admin" element={ <PrivateRoute role={"admin"} ><AdminDMain/></PrivateRoute> }/>
         <Route path="add-product" element={<PrivateRoute role={"admin"}><h1>add-product</h1></PrivateRoute>}/>
         <Route path="manage-products" element={<PrivateRoute role={"admin"}><h1>manage-products</h1></PrivateRoute>}/>
         <Route path="update-product/:id" element={<PrivateRoute role={"admin"}><h1>update-product</h1></PrivateRoute>}/>
