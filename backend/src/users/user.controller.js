@@ -140,13 +140,19 @@ const editUserProfile = async (req, res) => {
       bio,
       profession,
     };
-    const updatedUser = await User.findByIdAndUpdate(id, updateFields, {
-      new: true,
-    });
+    const updatedUser = await User.findByIdAndUpdate(id, updateFields, {new: true, runValidators: true });
     if (!updatedUser) {
       return errorResponse(res, 404, "User not found")
     }
-    return successResponse(res, 200, "User profile updated successfully", updatedUser)
+    return successResponse(res, 200, "User profile updated successfully!", data = {
+      _id: updatedUser._id,
+      username: updatedUser.username,
+      email: updatedUser.email,
+      role: updatedUser.role,
+      profileImage: updatedUser.profileImage,
+      bio: updatedUser.bio,
+      profession: updatedUser.profession,
+    });
   } catch (error) {
     errorResponse(res, 500, "Failed to Update user profile", error);
   }

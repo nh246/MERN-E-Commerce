@@ -15,6 +15,7 @@ import UserOrders from "../pages/dashboard/user/orders/UserOrders";
 import OrderDetail from "../pages/dashboard/user/orders/OrderDetail";
 import UserPayments from "../pages/dashboard/user/payments/UserPayments";
 import UserReviews from "../pages/dashboard/user/reviews/UserReviews";
+import UserProfile from "../pages/dashboard/user/profile/UserProfile";
 function RouterPage() {
   return (
     <Routes>
@@ -31,7 +32,7 @@ function RouterPage() {
       <Route path="/register" element={<Register />} />
       <Route path="/dashboard" element={<PrivateRoute><DashboardLayout/></PrivateRoute>}>
         <Route index element={<UserDMain/>} />
-        <Route path="profile" element={<h1>Profile</h1>} />
+        <Route path="profile" element={<UserProfile/>} />
         <Route path="orders" element={<UserOrders/>} />
         <Route path="payments" element={<UserPayments/>}/>
         <Route path="reviews" element={<UserReviews/>}/>
