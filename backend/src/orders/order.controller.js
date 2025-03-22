@@ -168,6 +168,7 @@ try {
   if(!deletedOrder){
     return errorResponse(res, 404, "Order not found")
   }
+  return successResponse(res, 200, "Order deleted successfully", deletedOrder)
 } catch (error) {
   return errorResponse(res, 500, "Failed to delete order", error)
 }

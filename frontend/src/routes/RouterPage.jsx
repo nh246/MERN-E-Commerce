@@ -18,6 +18,7 @@ import UserReviews from "../pages/dashboard/user/reviews/UserReviews";
 import UserProfile from "../pages/dashboard/user/profile/UserProfile";
 import AdminDMain from './../pages/dashboard/admin/dashboard/AdminDMain';
 import ManageUsers from './../pages/dashboard/admin/users/ManageUsers';
+import ManageOrders from './../pages/dashboard/admin/orders/ManageOrders';
 function RouterPage() {
   return (
     <Routes>
@@ -42,7 +43,7 @@ function RouterPage() {
         <Route path="add-product" element={<PrivateRoute role={"admin"}><h1>add-product</h1></PrivateRoute>}/>
         <Route path="manage-products" element={<PrivateRoute role={"admin"}><h1>manage-products</h1></PrivateRoute>}/>
         <Route path="update-product/:id" element={<PrivateRoute role={"admin"}><h1>update-product</h1></PrivateRoute>}/>
-        <Route path="manage-orders" element={<PrivateRoute role={"admin"}><h1>manage-orders</h1></PrivateRoute>}/>
+        <Route path="manage-orders" element={<PrivateRoute role={"admin"}><ManageOrders/></PrivateRoute>}/>
         <Route path="users" element={<PrivateRoute role={"admin"}><ManageUsers/></PrivateRoute>}/>
       </Route>
     </Routes>
