@@ -19,6 +19,7 @@ import UserProfile from "../pages/dashboard/user/profile/UserProfile";
 import AdminDMain from './../pages/dashboard/admin/dashboard/AdminDMain';
 import ManageUsers from './../pages/dashboard/admin/users/ManageUsers';
 import ManageOrders from './../pages/dashboard/admin/orders/ManageOrders';
+import AddProduct from './../pages/dashboard/admin/addProduct/AddProduct';
 function RouterPage() {
   return (
     <Routes>
@@ -40,7 +41,7 @@ function RouterPage() {
         <Route path="payments" element={<UserPayments/>}/>
         <Route path="reviews" element={<UserReviews/>}/>
         <Route path="admin" element={ <PrivateRoute role={"admin"} ><AdminDMain/></PrivateRoute> }/>
-        <Route path="add-product" element={<PrivateRoute role={"admin"}><h1>add-product</h1></PrivateRoute>}/>
+        <Route path="add-product" element={<PrivateRoute role={"admin"}><AddProduct/></PrivateRoute>}/>
         <Route path="manage-products" element={<PrivateRoute role={"admin"}><h1>manage-products</h1></PrivateRoute>}/>
         <Route path="update-product/:id" element={<PrivateRoute role={"admin"}><h1>update-product</h1></PrivateRoute>}/>
         <Route path="manage-orders" element={<PrivateRoute role={"admin"}><ManageOrders/></PrivateRoute>}/>
