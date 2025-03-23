@@ -66,6 +66,7 @@ try {
     .skip(skip)
     .limit(parseInt(limit))
     .populate("author", 'email username')
+    .sort({createdAt: -1})
 
 
 
